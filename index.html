@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Profiles for Web-based Signage Player - Core Profile</title>
+<script>
+(function () {
+  var els = ['section', 'article', 'aside', 'nav', 'header', 'footer', 'time'];
+  for (var i=0; i<els.length; i++ ) {
+    document.createElement(els[i]);
+  }
+})();
+</script>
+<link href="http://www.w3.org/community/src/css/spec/bg-draft.css" rel="stylesheet">
+<style>
+#sub-title {
+	font-size: 150%;
+	font-weight: bold;
+}
+dfn {
+	font-weight: bold;
+	font-style: normal;
+}
+figcaption {
+	font-size: 90%;
+	font-style: italic;
+}
+dl {
+	margin-left: 1em;
+}
+</style>
+</head>
+<body>
+<header class="head" id="head">
+	<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
+	<h1>Profiles for Web-based Signage Player - Core Profile</h1>
+	<p id="sub-title">Editor's Draft
+		<time datetime="2013-05-19">19 May 2013</time>
+	</p>
+	<dl>
+		<dt>This Version:</dt>
+		<dd>TBD</dd>
+		<dt>Latest Published Version:</dt>
+		<dd>TBD</dd>
+		<dt>Latest Editor's Draft:</dt>
+		<dd>TBD</dd>
+		<dt>Previous Versions:</dt>
+		<dd>TBD</dd>
+		<dt>Editor:</dt>
+		<dd><a href="mailto:futomi.hatano@newphoria.co.jp">Futomi Hatano</a>, Newphoria Corporation</dd>
+	</dl>
+	<p class="copyright">Copyright &copy; 2012 <a href="http://www.w3.org/"><abbr title="World Wide
+   Web Consortium">W3C</abbr></a><sup>&#174;</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts
+   Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research
+   Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>), published by the <a href="http://www.w3.org/community/websignage/">Web-based Signage Business Group</a> under the <a href="https://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a>. A human-readable <a href="http://www.w3.org/community/about/agreements/cla-deed/">summary</a> is available.</p>
+</header>
+<section>
+	<h2 id="abstract">Abstract</h2>
+	<p>This profile defines the basic requirements of web-based signage, such as playlist, transition effects, tickers, etc. It defines just requisite minimum for web-based signage. But it covers most of existing simple signs which show a still image or a html document for each scene. This profile also introduces the way to implement the requirements.</p>
+	<p>Videos and audios are not included in this profile. These will be defined as other profiles in the future.</p>
+</section>
+<section>
+	<h2 class="no-num no-toc" id="status-of-this-document">Status of this document</h2>
+	<p>This specification was published by the <a href="http://www.w3.org/community/websignage/">Web-based Signage Business Group</a>. It is not a W3C Standard nor is it on the W3C Standards Track. Please note that under the <a href="http://www.w3.org/community/about/agreements/cla/">W3C Community Contributor License Agreement (CLA)</a> there is a limited opt-out and other conditions apply. Learn more about <a href="http://www.w3.org/community/">W3C Community and Business Groups</a>.</p>
+</section>
+<section>
+	<h2>Conformance</h2>
+	<p>As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.</p>
+	<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in the normative parts of this document are to be interpreted as described in RFC2119. For readability, these words do not appear in all uppercase letters in this document. <a href="#refsRFC2119">[RFC2119]</a></p>
+</section>
+<nav>
+	<h2 id="toc">Table of Contents</h2>
+	<ol class="toc">
+		<li><a href="#introduction">1 Introduction of the Profiles for Web-based Signage Player</a></li>
+		<li><a href="#terminology">2 Terminology</a></li>
+		<li><a href="#concept_of_control_data">3 Concept of control data</a></li>
+		<li><a href="#concept_of_viewport">4 Concept of viewport</a></li>
+		<li><a href="#viewport_properties">5 Viewport properties</a></li>
+		<li><a href="#regions">6 Regions</a></li>
+		<li><a href="#scene_content_types">7 Scene content types</a>
+			<ol class="toc">
+				<li><a href="the_event_notification_mechanism">7.1 The event notification mechanism</a></li>
+			</ol>
+		</li>
+		<li><a href="#playlist">8 Playlist</a></li>
+		<li><a href="#scheduling">9 Scheduling</a>
+			<ol class="toc">
+				<li><a href="scheduling_types">9.1 Scheduling types</a></li>
+				<li><a href="breaking_in_the_playlist">9.2 Breaking in the playlist</a></li>
+				<li><a href="resuming_the_playlist">9.3 Resuming the playlist</a></li>
+			</ol>
+		</li>
+		<li><a href="#transition_effects">10 Transition effects</a></li>
+		<li><a href="#properties_for_single_image_scenes">11 Properties for single image scenes</a></li>
+		<li><a href="#ticker">12 Ticker</a>
+			<ol class="toc">
+				<li><a href="the_properties_for_a_ticker_box">12.1 The properties for a ticker box</a></li>
+				<li><a href="the_properties_for_a_ticker_text">12.2 The properties for a ticker text</a></li>
+				<li><a href="multiple_texts">12.3 Multiple texts</a></li>
+			</ol>
+		</li>
+		<li><a href="#updating_the_control_data">13 Updating the control data</a>
+			<ol class="toc">
+				<li><a href="updated_data_box">13.1 Updated data</a></li>
+				<li><a href="catching_the_update_event">13.2 Catching the update event</a></li>
+				<li><a href="applying_the_updated_control_data">13.3 Applying the updated control data</a></li>
+			</ol>
+		</li>
+		<li><a href="#example_of_the_control_data">14 Example of the control data</a></li>
+		<li><a href="#references">References</a></li>
+	</ol>
+</nav>
+<section>
+	<h2 id="introduction">1 Introduction of the Profiles for Web-based Signage Player</h2>
+	<p><i>This section is non-normative.</i></p>
+	<p>The &quot;Profiles for Web-based Signage Player&quot; defines precise requirements for web-based signage players.</p>
+	<p>The profiles for web-based signage player consist of a number of profiles. Basically, web-based signage is based on the core profile (this document). As necessary, web-based signage systems adopt the other profiles additionally.</p>
+	<p>These profiles are also intended to be used as product specification sheets of web-based signage products for vendors, RFP (request for proposal) used by the signage operators to request SDCs (Systems Development Corporations) to develop a web-based signage system , etc.</p>
+	<p>Each profile will be published officially as a W3C Business Group Report when all requirements are proven to be able to be implemented and run on at least one existing user agents technically (exept the requirements marked as &quot;Optional&quot;). In other words, at least one demonstration implementing all the requirements must exist to publish the profile officially.</p>
+	<p>Through these activities, the Web-based Signage Business Group aims to:</p>
+	<ul>
+		<li>Diffuse web-based signage in the digital signage industry.</li>
+		<li>Share technical knowledge of web-based signage in the digital signage industry.</li>
+		<li>Find required APIs or functions for web-based signage, and propose the relevant working groups as necessary.</li>
+	</ul>
+	<p>We believe that web-based signage contribute to cost-efficiencies and rich functionalities in the digital signage industry. As a result, we hope that the digital signage industry will grow up increasingly.</p>
+</section>
+<section>
+	<h2 id="terminology">2. Terminology</h2>
+	<p>The term <dfn id="web-based_signage">web-based signage</dfn> means digital signage whose contents are created by only web-technologies. Besides, it has a capability of connecting to a network. It is not a matter whether the network is the Internet or not. The web-based signage includes the terminal in an intranet.</p>
+	<p>The term <dfn id="contents">contents</dfn> mean everything shown on a digital signage display. The contents of the web-based signage are served by a content server through a network. They consist of HTML, CSS, and JavaScript. Some contents are possibly created using XML-based technologies which are embedded in HTML, such as SVG.</p>
+	<p>The term <dfn id="scene">scene</dfn> means a part of web-based signage contents. In this document, It is limitted to a still image, a  html document without videos and audios. A scene possibly has some animation. Generally, web-based signage plays a sequence of scenes, and shows each scene one by one continuously and repeatedly.</p>
+	<p>The term <dfn id="runtime">runtime</dfn> means a common web browser (webkit-based browsers, Firefox, IE, etc.) or a web-based application runtime (Firefox OS, Tizen, Windows 8, etc.) installed in tablets, PCs, STBs, TV (most of current high-end TV products implement a web-browser), etc.</p>
+	<p>The term <dfn id="application">application</dfn> means a set of JavaScript programs and style sheets and HTML. An application is run on a runtime, fetches contents form a content server, then plays the contents appropriately.</p>
+	<p>The term <dfn id="player">player</dfn> means a set of a  runtime and an application. It doesn't include the underlying hardware and the operating system. </p>
+	<p>This document mainly defines the requirements for applications. But it implicitly includes the requirements for runtimes because applications must use  web technologies implemented in runtimes to meet the requirements for applications. Therefore, this document defines the requirements for players (applications and runtimes).</p>
+</section>
+<section>
+	<h2 id="concept_of_control_data">3. Concept of control data</h2>
+	<p>The <dfn id="control_data">control data</dfn> is a set of information which describes what, when, how the contents should be shown and played. Concretely speaking, it consists of information about scene content types, playlist, scheduling, multi-region, ticker, etc. Basically, this document defines the requirements for players in the form of describing the control data. Applications must support a mechanism which handles the control data.</p>
+	<p>In this document, the format of the control data is not defined. It may be JSON or XML or custom formats. <a href="#refsJSON">[JSON]</a> <a href="#refsXML">[XML]</a></p>
+	<p>Control data is insisted to be generated by CMS (content management system) for web-based signage. Conformant players of this profile must show and  play contents as a scene as the control data defines.</p>
+</section>
+<section>
+	<h2 id="concept_of_viewport">4. Concept of viewport</h2>
+	<p>The <dfn id="display_viewport">display viewport</dfn> is the area in which the display can show something. The <dfn id="content_viewport">content viewport</dfn> is the area in which an application shows web-based signage contents. The display viewport and the content viewport are not necessarily identical.</p>
+	<p>In the content viewport, the <dfn id="region">region</dfn>s are positioned. The web-based signage has at least one region in the content viewport. It may have also multiple regions. If it has multiple regions, each region is basically used to play independent contents of each other.</p>
+	<p>In a region, one scene is shown. A region does not show multiple scenes simultaneously. A region show some scenes sequentially based on the playlist.</p>
+	<p>A scene shows contents. In this profile, the contents consist of an image file or a HTML page (a HTML file, CSS files, JavaScript files, image files, SVG files, etc.)</p>
+	<figure> <img src="imgs/concept_of_viewport.png" width="400" height="229" alt="">
+		<figcaption>Figure: Concept of viewport</figcaption>
+	</figure>
+</section>
+<section>
+	<h2 id="viewport_properties">5 Viewport properties</h2>
+	<p>The content viewport is the rectangle area in which web-based signage contents are shown. On the other hand, the display viewport is the rectangle area of the display. Therefore, the content viewport and the display viewport are not necessarily identical. The width and height may be different. The aspect ratio also may be different.</p>
+	<p>The control data includes the information of the display viewport as follows:</p>
+	<dl>
+		<dt>Background color</dt>
+		<dd>
+			<p>This color will be seen when the aspect ratios or the dimensions of the content viewport and the display viewport are not identical. (typically, it will be black)</p>
+			<p>This color is specified in a CSS color. <a href="refsCSSCOLOR">[CSSCOLOR]</a></p>
+		</dd>
+	</dl>
+	<p>The control data includes the information of the content viewport as follows:</p>
+	<dl>
+		<dt>Background color</dt>
+		<dd>
+			<p>This color will be seen when the regions does not cover the whole content viewport. (typically, it will be black)</p>
+			<p>This color is specified in a CSS color. <a href="refsCSSCOLOR">[CSSCOLOR]</a></p>
+		</dd>
+		<dt>Width</dt>
+		<dd>
+			<p>This is the intrinsic width of the content viewport in pixel.</p>
+		</dd>
+		<dt>Height</dt>
+		<dd>
+			<p>This is the intrinsic height of the content viewport in pixel.</p>
+		</dd>
+		<dt>Fit</dt>
+		<dd>
+			<p>This is a mode which indicates how the content viewport should be fit to the display viewport. There are 3 modes as follows:</p>
+			<dl>
+				<dt>None</dt>
+				<dd>
+					<p>Applications must not scale the content viewport. The content viewport will be shown as it is on the display viewport. If the size of the content viewport is smaller than the size of the display viewport, the margins will appear. The margin will be colored in the background color specified for  the display viewport (typically, it will be black).</p>
+				<dt>Meet</dt>
+				<dd>
+					<p>Applications must scale the content viewport preserving the aspect ratio of the content viewport so that either the width or the height of the content viewport is equal to that of the display viewport, and the whole content viewport is visible. If the aspect ratio of the content viewport does not match the aspect ratio of the display viewport, the content viewport will be letterboxed or pillarboxed (i.e. margins will appear on both of the top and bottom sides or both of the left and right sides). The margin will be colored in the background color  specified for the display viewport (typically, it will be black).</p>
+				<dt>Fill</dt>
+				<dd>
+					<p>Applications must scale the content viewport preserving the aspect ratio of the content viewport so that either the width or the height of the content viewport is equal to that of the display viewport, and the whole display viewport is covered by the content viewport. If the aspect ratio of the content viewport does not match the aspect ratio of the display viewport, a part of the content viewport is invisible.</p>
+				</dd>
+			</dl>
+		</dd>
+		<dt>Horizontal align</dt>
+		<dd>
+			<p>This property defines how the content viewport should be aligned horizontally in the display viewport. There are 3 types for the horizontal align as follows:</p>
+			<dl>
+				<dt>Left</dt>
+				<dd>
+					<p>The content viewport is left-justified in the display viewport so that the left side of the content viewport fit the left side of the display viewport.</p>
+				</dd>
+				<dt>Center</dt>
+				<dd>
+					<p>The content viewport is center-justified in the display so that the horizontal center of the content viewport fit the horizontal center of the display viewport.</p>
+				</dd>
+				<dt>Right</dt>
+				<dd>
+					<p>The content viewport is right-justified so that the right side of the content viewport fit the right side of the display viewport.</p>
+				</dd>
+			</dl>
+		</dd>
+		<dt>Vertical align</dt>
+		<dd>
+			<p>This property defines how the content viewport should be aligned vertically in the display viewport. There are 3 types for the vertical align as follows:</p>
+			<dl>
+				<dt>Top</dt>
+				<dd>
+					<p>The content viewport is top-justified so that the top side of the content viewport fit the top side of the display viewport.</p>
+				</dd>
+				<dt>Middle</dt>
+				<dd>
+					<p>The content viewport is middle-justified so that the vertical center of the content viewport fit the vertical center of the display viewport.</p>
+				</dd>
+				<dt>Bottom</dt>
+				<dd>
+					<p>The content viewport is bottom-justified so that the bottom side of the content viewport fit the bottom side of the display viewport.</p>
+				</dd>
+			</dl>
+		</dd>
+	</dl>
+	<p>The following figures show the combinations of the fit, horizontal align and vertical align properties. In the figures, the content viewport is vertically long, while display viewport is horizontally long.</p>
+	<figure> <img src="imgs/content_viewport.png" width="785" height="360" alt="">
+		<figcaption>Figure: Properties for content viewport</figcaption>
+	</figure>
+	<p>Applications can use <code>scale()</code> or <code>scale3d()</code> specified CSS Transforms to implement the fit property. [CSSTRANSFORMS]</p>
+</section>
+<section>
+	<h2 id="regions">6 Regions</h2>
+	<p>Web-based Signage player must support multi-region. All web-based signage have at least one region. Multi-region means that the content viewport area is separated into more than 2 regions. Besides, the scene shown in each region is played independently of each other. Each region has a playlist data independently.</p>
+	<p>The following examples  show 2-region layouts:</p>
+	<figure> <img src="imgs/multi_region_examples.png" width="600" height="155" alt="">
+		<figcaption>Figure: Examples of multi-regions</figcaption>
+	</figure>
+	<p>In the first two layouts, A and B do not overlap each other. In the third layout, A overlaps on B.</p>
+	<p>Each region has some properties as follows:</p>
+	<dl>
+		<dt>Top</dt>
+		<dd>
+			<p>The value of this property is the distance from the top edge of the content viewport to the top edge of the region.</p>
+		</dd>
+		<dt>Left</dt>
+		<dd>
+			<p>The value of this property is the distance from the left edge of the content viewport to the left edge of the region.</p>
+		</dd>
+		<dt>Width</dt>
+		<dd>
+			<p>The value of this property is the distance from the left edge to the right edge of the region.</p>
+		</dd>
+		<dt>Height</dt>
+		<dd>
+			<p>The value of this property is the distance from the top edge to the bottom edge of the region.</p>
+		</dd>
+		<dt>Z-index</dt>
+		<dd>
+			<p>The value of this property is as same as the z-index property of CSS. The regions which have higher value are shown on the higher layers. The default value is 1.</p>
+		</dd>
+		<dt>Background color</dt>
+		<dd>
+			<p>This color will be seen at areas where the contents do not exist or the contents are transparent. This color is specified in a CSS color. <a href="refsCSSCOLOR">[CSSCOLOR]</a></p>
+		</dd>
+	</dl>
+	<p>The following  figure shows the relationship between the properties other than the background color.</p>
+	<figure> <img src="imgs/multi_region_properties.png" width="312" height="246" alt="">
+		<figcaption>Figure: The relationships between the properties</figcaption>
+	</figure>
+	<p>The values of the top, left, width, and height are specified in pixel or percent. When values are specified in percent, it is based on the width or height of the content viewport. For example, when the width of the content viewport is 1280px and the value of the width property is 20%, then the width of the region is 256px. When the height of content viewport is 720px and the value of the height property is 20%, then the height of the region is 144px. Similarly, when the value of the left property is 20%, the distance from the left edge of the content viewport to the left edge of the region is 256px.</p>
+</section>
+<section>
+	<h2 id="scene_content_types">7 Scene content types</h2>
+	<p>Conformant players of this profile must support 3 types of contents as a scene.</p>
+	<dl>
+		<dt>Single image</dt>
+		<dd>
+			<p>Players must render an image file as a scene. Players must support PNG, GIF (including animation gif), and JPEG as an image format at least. An image file is rendered using the <code>img</code> element or the <code>object</code> element specified in HTML5. <a href="#refsPNG">[PNG]</a> <a href="#refsGIF">[GIF]</a> <a href="#refsJPEG">[JPEG]</a> <a href="#refsHTML5">[HTML5]</a></p>
+			<p>Players must support   DataURLs for  images. <a href="#refsRFC2397">[RFC2397]</a></p>
+			<p>Players may support more sophisticated formats, such as PDF. <a href="#refsPDF">[PDF]</a></p>
+		</dd>
+		<dt>HTML-based page</dt>
+		<dd>
+			<p>Players must render a HTML page as a scene.</p>
+			<p>For a security reason, players are encouraged to render a HTML-based scene in the <code>iframe</code> element specified in the HTML5. Each HTML-based scene possibly has scripts for some kind of actions or animations. If some scenes are made by third parties, the other scenes are possibly exposed to some kind of risks. Besides, the styling possibly affects the other scenes. Therefore, players should have a mechanism that contents in scenes never affect the underlying application and the other scenes.</p>
+			<p>Applications must provide a mechanism to notify each scene of events which represents the moment when the scene was shown and the moment when the scene was hidden, so that each scene can start and stop various behaviors or animations with proper timing. The mechanism is introduced in the section "The iframe event notification mechanism" below.</p>
+		</dd>
+		<dt>SVG-based page</dt>
+		<dd>
+			<p>Players must render an SVG-based page as a scene. SVG contents may be rendered in the <code>svg</code> element embedded in HTML (a.k.a. inline SVG) or in the <code>object</code> element as specified in the HTML5 specification. <a href="#refsHTML5">[HTML5]</a> <a href="#refsSVG">[SVG]</a></p>
+		</dd>
+	</dl>
+	<section>
+		<h3 id="the_event_notification_mechanism">7.1 The event notification mechanism</h3>
+		<p><i>This section is non-normative.</i></p>
+		<p>To convey an event to each HTML-based scene embedded in the <code>iframe</code> element, applications may use <cite>HTML5 Web Messaging</cite> or the <code>dispatchEvent()</code> method specified in <cite>DOM4</cite> on the <code>WindowProxy</code> interface of the <code>iframe</code> element (you can access it through the <code>contentWindow</code> IDL attribute on the <code>HTMLIFrameElement</code> interface of the <code>iframe</code> element) for the mechanism. <a href="#refsWEBMESSAGING">[WEBMESSAGING]</a> <a href="#refsDOM4">[DOM4]</a> <a href="#refsHTML5">[HTML5]</a></p>
+		<p>This code snippet shows how a HTML-based scene receives events from the parent application.</p>
+		<pre><code>window.addEventListener('message', function(event) {
+  if(event.data === 'show') {
+    // starting some animations.
+  } else if(event.data === 'hide') {
+    // stopping some animations.
+  }
+}, false);</code></pre>
+		<p>The following code snippet shows how an application sends events to a HTML-based scene using <cite>HTML5 Web Messaging</cite>.</p>
+		<pre><code>var iframe = document.querySelector('iframe');
+iframe.contentWindow.postMessage('show', '/');</code></pre>
+		<p>The following code snippet shows how an application sends events to a HTML-based scene using the <code>dispatchEvent()</code> method specified in <cite>DOM4</cite>.</p>
+		<pre><code>var iframe = document.querySelector('iframe');
+var event = new CustomEvent('message');
+event.data = 'show';
+iframe.contentWindow.dispatchEvent(event);</code></pre>
+		<p>If the origin of the application is same as the origin of the HTML-based scene, the two code snippets for sending events above work well.</p>
+		<p>If the origins are not same, the snippet using <cite>HTML5 Web Messaging</cite> will work well replacing the second argument of <code>postMessage()</code> to the origin of the HTML-based scene. On the other hand, the snippet using <code>dispatchEvent()</code> method does not work in this situation.</p>
+	</section>
+</section>
+<section>
+	<h2 id="playlist">8 Playlist</h2>
+	<p>The playlist defines how each scene should be shown sequentially. Applications must support a mechanism which handles a playlist.</p>
+	<p>Scenes must be shown based on a definition of scene sequence in a playlist. Each scene will be shown in specified duration in a playlist. The <dfn id="duration">duration</dfn> means the length of time that the related scene is shown on the display. The duration must be specified in seconds.</p>
+	<p>Each scene must have the duration. If the duration isn't specified, application is encouraged to adapt the default duration (for example, 60seconds).</p>
+	<p>Let's suppose that there are 5 scenes (A - E). Applications must support the scene sequences as follows:</p>
+	<dl>
+		<dt>Simple loop</dt>
+		<dd>
+			<p>This sequence means that all scenes are shown repeatedly (A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; A -&gt; B -&gt; C -&gt; D -&gt; E -&gt; A -&gt; ...). After the last scene (E) has been played, the first scene is shown again. This sequence is the most popular for digital signage.</p>
+			<p>Besides, applications must support the repeat count. The repeat count must be a non-negative integer. If the repeat count is specified in the playlist, applications must repeat the specified times. If the repeat count isn't specified or the repeat count is 0, application must repeat the sequence infinitely.</p>
+			<p>If the repeat count is not 0 (i.e. it is more than 0), the last scene (E) still continues to be shown after it has been played.</p>
+		</dd>
+		<dt>Individual loop</dt>
+		<dd>
+			<p>This sequence means that a specific scene is shown repeatedly. If scene B is specified as individual loop, and the repeat count is 2, then the sequence will be A -&gt; B -&gt; B-&gt; C -&gt; D -&gt; E.</p>
+			<p>The repeat count must be an non-negative integer greater than 0. If the repeat count isn't specified or invalid, applications must act as the count is 1.</p>
+		</dd>
+		<dt>Nested loop (Optional)</dt>
+		<dd>
+			<p>This sequence means that a particular set of scenes played repeatedly. Besides, applications must support the repeat count for each nested loop.  If the repeat count is specified for a set of scenes in the playlist, applications must repeat the nested loop the specified times. When nested loops are defined in a playlist, the repeat count must be specified for each. </p>
+			<p>The repeat count must be an non-negative integer greater than 0. If the repeat count isn't specified or invalid, applications must act as the count is 1.</p>
+			<p>Let's suppose that scenes  B and C are specified as a nested loop, and the repeat count is 2. Then the sequence will be A -&gt; B -&gt; C -&gt; B -&gt; C -&gt; D -&gt; E.</p>
+		</dd>
+	</dl>
+</section>
+<section>
+	<h2 id="scheduling">9 Scheduling</h2>
+	<p>Scenes can be shown at the specified date-time or time. The scene will be shown on a display based on a definition of scheduling in a playlist.</p>
+	<section>
+		<h3 id="scheduling_types">9.1 Scheduling types</h3>
+		<p>Application must show each scene based on the scheduling data. Application must support the scheduling types as follows:</p>
+		<dl>
+			<dt>One shot (Optional)</dt>
+			<dd>
+				<p>This means that the scene is shown once at the specified date-time. The date-time data consists of year, month, day, hour, minute, and second. For example, it could be "2013-12-24T00:00:00" which means that the scene will start at just 12 o'clock on Tuesday, 24 December, 2013.</p>
+				<p>Optionally, application may support a time-zone offset. For example, it could be "2013-12-24T00:00:00+0900". If a time-zone offset isn't specified, applications should treat the date-time data as a local date-time.</p>
+				<p>Applications may discard the data related to the one shot scene after the scene ended.</p>
+			</dd>
+			<dt>Daily shot</dt>
+			<dd>
+				<p>This means that the scene is shown once a day at the specified time. The time data consists of hour, minute, and second. For example, it could be "12:00:00" which means that the scene will start at every just 12 o'clock daily.</p>
+				<p>Optionally, application may support a time-zone offset. For example, it could be "12:00:00+0900". If a time-zone offset isn't specified, applications should treat the time data as a local time.</p>
+			</dd>
+			<dt>Hourly shot</dt>
+			<dd>
+				<p>This means that the scene is shown once an hour at the specified minute. The minute data consists of minute and second. For example, it could be "30:00" which means that the scene will start t at just 30 minutes hourly.</p>
+			</dd>
+			<dt>Minutely shot (Optional)</dt>
+			<dd>
+				<p>This means that the scene is shown once a minute at the specified second. For example, it could be "00" which means that the scene will start at just 0 second minutely.</p>
+			</dd>
+		</dl>
+	</section>
+	<section>
+		<h3 id="breaking_in_the_playlist">9.2 Breaking in the playlist</h3>
+		<p>To break in the playlist at the scheduled time, applications must support the ways to break as follows:</p>
+		<dl>
+			<dt>Hard beak</dt>
+			<dd>
+				<p>When the scheduled time comes, applications must pause or stop then hide the current scene and show the scheduled scene even though the current scene is to be shown at the time.</p>
+			</dd>
+			<dt>Soft break (Optional)</dt>
+			<dd>
+				<p>When the scheduled time comes, applications must wait until the current scene end. When the current scene ended, applications show the scheduled scene  instead of showing the next scene in the playlist. </p>
+			</dd>
+		</dl>
+	</section>
+	<section>
+		<h3 id="resuming_the_playlist">9.3 Resuming the playlist</h3>
+		<p>To resuming the playlist after the scheduled scene, applications must support the ways to resume as follows:</p>
+		<dl>
+			<dt>Strict resume (Optional)</dt>
+			<dd>
+				<p>When the scheduled scene finished, applications must resume the paused scene. When resuming the paused scene, applications are required to guarantee the remaining time of the duration at least. If possible, applications should resume the state of the content, such as animations.</p>
+				<p>When resuming the paused scene, applications must not apply the transition effect for the paused scene.</p>
+			</dd>
+			<dt>Lax resume</dt>
+			<dd>
+				<p>When the scheduled scene finished, applications must start the paused scene again. This means that the paused scene will be shown in the specified duration again.</p>
+				<p>When resuming the paused scene, applications must apply the transition effect for the paused scene, if any.</p>
+			</dd>
+		</dl>
+	</section>
+</section>
+<section>
+	<h2 id="transition_effects">10 Transition effects</h2>
+	<p>The transition effects are seen when the  scene is started to be shown. Basically, a transition effect is applied when a scene emerges.</p>
+	<p>The transition effect has duration in seconds. The duration of the transition effect is included in the duration of the scene at the beginning.</p>
+	<p>Applications must support the all transition effects as follows:</p>
+	<dl>
+		<dt>None</dt>
+		<dd>
+			<p>No effect. When a scene starts, it will be visible completely and suddenly.</p>
+		</dd>
+		<dt>Fade</dt>
+		<dd>
+			<p>The opacity of the scene is 0.0 at first. The scene is invisible at the moment. Then it increases gradually. Finally, the opacity becomes 1.0 and the scene is visible completely.</p>
+			<figure>
+				<img src="imgs/trans_fade_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the fade effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_fade.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the fade effect</figcaption>
+			</figure>
+		</dd>
+		<dt>Slide to right</dt>
+		<dd>
+			<p>The scene is positioned so that the right edge of the scene fits the left edge of the region at first. It is invisible at the moment. Then it moves to right gradually. Finally, the right edge of the scene fits the right edge of the region.</p>
+			<figure>
+				<img src="imgs/trans_slide_right_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the slide-to-right effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_slide_right.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the slide-to-right effect</figcaption>
+			</figure>
+		</dd>
+		<dt>Slide to left</dt>
+		<dd>
+			<p>The scene is positioned so that the left edge of the scene fits the right edge of the region at first. It is invisible at the moment. Then it moves to left gradually. Finally, the left edge of the scene fits the left edge of the region.</p>
+			<figure>
+				<img src="imgs/trans_slide_left_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the slide-to-left effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_slide_left.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the slide-to-left effect</figcaption>
+			</figure>
+		</dd>
+		<dt>Slide to top</dt>
+		<dd>
+			<p>The scene is positioned so that the top edge of the scene fits the bottom edge of the region at first. It is invisible at the moment. Then it moves to top gradually. Finally, the top edge of the scene fits the top edge of the region.</p>
+			<figure>
+				<img src="imgs/trans_slide_top_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the slide-to-top effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_slide_top.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the slide-to-top effect</figcaption>
+			</figure>
+		</dd>
+		<dt>Slide to bottom</dt>
+		<dd>
+			<p>The scene is positioned so that the bottom edge of the scene fits the top edge of the viewport at first. It is invisible at the moment. Then it moves to bottom gradually. Finally, the bottom edge of the scene fits the bottom edge of the region.</p>
+			<figure>
+				<img src="imgs/trans_slide_bottom_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the slide-to-bottom effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_slide_bottom.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the slide-to-bottom effect</figcaption>
+			</figure>
+		</dd>
+		<dt>Scale</dt>
+		<dd>
+			<p>The scene is scaled down as small as possible, positioned at the center of the viewport. Then it is scaled up gradually. Finally, its size becomes as same as the size of the region.</p>
+			<figure>
+				<img src="imgs/trans_scale_timeline.png" width="800" height="117" alt="">
+				<figcaption>Figure: The timeline of the scale effect</figcaption>
+			</figure>
+			<figure>
+				<img src="imgs/trans_scale.gif" width="200" height="150" alt="">
+				<figcaption>Figure: The animation of the scale effect</figcaption>
+			</figure>
+		</dd>
+	</dl>
+	<p>Basically, all of the transition effects above can be achieved using CSS Transitions, CSS Transforms, and CSS Color Module Level 3 (the <code>opacity</code> property). Applications may support more sophisticated effects. <a href="#refsCSSTRANSITIONS">[CSSTRANSITIONS]</a> <a href="#refsCSSTRANSFORMS">[CSSTRANSFORMS]</a> <a href="#refsCSSCOLOR">[CSSCOLOR]</a></p>
+	<p>Applications must support at least &quot;linear&quot; as the easing of the animations for the transition effects. Application may support more sophisticated easing, such as &quot;ease&quot;, &quot;ease-in&quot;, &quot;ease-out&quot;, &quot;ease-in-out&quot;, custom easing, etc.</p>
+</section>
+<section>
+	<h2 id="properties_for_single_image_scenes">11 Properties for single image scenes</h2>
+	<p>The scene whose content type is &quot;single image&quot; has 3 properties as follows. Applications must support all properties:</p>
+	<dl>
+		<dt>Fit</dt>
+		<dd>
+			<p>This property defines how to scale the image fitting to the size of the region. Applications must support the fitting types as follows at least:</p>
+			<dl>
+				<dt>None</dt>
+				<dd>
+					<p>The image is not scaled at all. The image will be shown as it is in the region. If the size of the image is smaller than the size of the underlying region, margins will appear. The margin will be colored the background color specified for the region (typically, it will be black).</p>
+				</dd>
+				<dt>Meet</dt>
+				<dd>
+					<p>The image is scaled preserving the aspect ratio of the image so that either the width or the height of the image is equal to that of the region, and the whole image is visible. If the aspect ratio of the image is not as same as the aspect ratio of the region, the image will be letterboxed or pillarboxed (i.e. margins will appear on both of the top and bottom sides or both of the left and right sides of the region). The margin will be colored in the background color specified for the region (typically, it will be black).</p>
+				</dd>
+				<dt>Fill</dt>
+				<dd>
+					<p>The image is scaled preserving the aspect ratio of the image so that either the width or the height of the image is equal to the one of the region, and the whole region is covered by the image. If the aspect ratio of the image is not as same as the aspect ratio of the region, a part of the image is invisible.</p>
+				</dd>
+			</dl>
+		</dd>
+		<dt>Horizontal align</dt>
+		<dd>
+			<p>This property defines how to align the image horizontally in the region. Applications must support the horizontal align types as follows:</p>
+			<dl>
+				<dt>Left</dt>
+				<dd>
+					<p>The image is aligned so that the left side of the image fits the left side of the region.</p>
+				</dd>
+				<dt>Center</dt>
+				<dd>
+					<p>The image is aligned so that the horizontal center of the image fits the horizontal center of the region.</p>
+				</dd>
+				<dt>Right</dt>
+				<dd>
+					<p>The image is aligned so that the right side of the image fits the right side of the region.</p>
+				</dd>
+			</dl>
+		</dd>
+		<dt>Vertical align</dt>
+		<dd>
+			<p>This property defines how to align the image vertically in the region. Applications must support the vertical align types as follows:</p>
+			<dl>
+				<dt>Top</dt>
+				<dd>
+					<p>The image is aligned so that the top side of the image fits the top side of the region.</p>
+				</dd>
+				<dt>Middle</dt>
+				<dd>
+					<p>The image is aligned so that the vertical center of the image fits the vertical center of the region.</p>
+				</dd>
+				<dt>Bottom</dt>
+				<dd>
+					<p>The image is aligned so that the bottom side of the image fits the bottom side of the region.</p>
+				</dd>
+			</dl>
+		</dd>
+	</dl>
+	<p>Applications can use <code>scale()</code> or <code>scale3d()</code> specified CSS Transforms to implement the fit property. Applications should not use the dimension attributes of the <code>img</code> element (i.e. the <code>width</code> and <code>height</code> content attributes, the <code>width</code> and <code>height</code> IDL attributes) for the purpose. The dimension attributes are not intended to be used to stretch the image, as HTML5 specification mentions. <a href="#refsCSSTRANSFORMS">[CSSTRANSFORMS]</a> <a href="#refsHTML5">[HTML5]</a></p>
+	<p>Basically, authors are encouraged to prepare images based on the  width and the  height of the region, and set the fit property to &quot;none&quot; to prevent unnecessary scaling.</p>
+</section>
+<section>
+	<h2 id="ticker">12 Ticker</h2>
+	<p>A ticker is a content which consists of one line texts only. Typically, it is shown in one of the region and independent from the other regions. But some tickers are included in scenes overlaying the other contents. The ticker text moves to a specific direction so that passers can read whole text in the limited width of the screen.</p>
+	<p>Typically, the area for a ticker is shown in a top or bottom side in a screen. A ticker text moves from left to right if the directionality of the text is LTR (left-to-right) such as English, from right to left if the directionality of the text is RTL (right-to-left) such as Arabic.</p>
+	<p>Vertical tickers could be imaginable in some Asian countries. But it is unusual as digital signage contents even in Japan, in which vertical writing mode is common. Therefore vertical tickers are not defined in this profile.</p>
+	<p>Conceptually, a scene has contents and a ticker box. A ticker box overlay the contents in the scene area. A ticker text is in a ticker box. A ticker text moves in a ticker box. Only the letters of a ticker text inside a ticker box are visible. The letters of a ticker text outside a ticker box are invisible.</p>
+	<figure> <img src="imgs/concept_of_ticker.png" width="306" height="230" alt="">
+		<figcaption>Figure: The concept of ticker</figcaption>
+	</figure>
+	<p>If the directionality of a ticker text is LTR, the ticker text is located outside the ticker box so that the left edge of the ticker text fits the right edge of the ticker box at first. At the time, the ticker text is completely invisible. Then the ticker text emerges moving to left at the specified speed. Finally, the ticker text is gone outside the ticker box so that the right edge of the ticker text fits the left edge of the ticker box. At the time, the ticker text is completely invisible again.</p>
+	<p>Application must support the properties for tickers as follows. These properties are associated with a scene. These properties are separated into 2 groups: The properties for a ticker box and the properties for a ticker text.</p>
+	<section>
+		<h3 id="the_properties_for_a_ticker_box">12.1 The properties for a ticker box</h3>
+		<p>The properties for a ticker box are as follows:</p>
+		<dl>
+			<dt>Top</dt>
+			<dd>
+				<p>The value of this property is the distance from the top edge of the region to the top edge of the ticker box.</p>
+			</dd>
+			<dt>Left</dt>
+			<dd>
+				<p>The value of this property is the distance from the left edge of the region to the left edge of the ticker box.</p>
+			</dd>
+			<dt>Width</dt>
+			<dd>
+				<p>The value of this property is the distance from the left edge to the right edge of the ticker box.</p>
+			</dd>
+			<dt>Height</dt>
+			<dd>
+				<p>The value of this property is the distance from the top edge to the bottom edge of the ticker box.</p>
+			</dd>
+			<dt>Background color</dt>
+			<dd>
+				<p>This color is used for the background color of the ticker box. This color is specified in a CSS color. <a href="refsCSSCOLOR">[CSSCOLOR]</a></p>
+			</dd>
+			<dt>Repeat</dt>
+			<dd>
+				<p>This value is the number of repeat count that represents how many times the ticker texts should be shown. This value must be a non-negative integer. If this value is 0, then the ticker texts will be shown repeatedly during the underlying scene is shown.</p>
+			</dd>
+		</dl>
+		<p>The values of the top, left, width, and height are specified in pixel or percent. When values are specified in percent, it is based on the width or height of the region. For example, when the width of the region is 1280px and the value of the width property is 20%, then the width of the ticker box is 256px. When the height of the region is 720px and the value of the height property is 20%, then the height of the ticker box is 144px. Similarly, when the value of the left property is 20%, the distance from the left edge of the region to the left edge of the ticker box is 256px.</p>
+	</section>
+	<section>
+		<h3 id="the_properties_for_a_ticker_text">12.2 The properties for a ticker text</h3>
+		<p>The properties for a ticker text are as follows:</p>
+		<dl>
+			<dt>Type</dt>
+			<dd>
+				<p>This value is either &quot;text&quot; or &quot;image&quot;. Some signage system often uses an image for a ticker text so that a ticker text can be shown in a same font style in various platforms (OSs). Generally, the pre-installed fonts are poor especially in embedded devices. Though favorite fonts can be installed on the platforms or Web fonts can be used, the license fee of  fonts is very expensive especially in Asian countries. Therefore, image type tickers are still required.</p>
+			</dd>
+			<dt>Font</dt>
+			<dd>
+				<p>This value is CSS style for the text specified in the CSS Fonts Module Level 3.  This property is ignored if the property &quot;type&quot; is not &quot;text&quot;. <a href="#refsCSSFONTS">[CSSFONTS]</a></p>
+				<p>For example, the value could be as follows:</p>
+				<pre><code>color:white; font-size:24px; font-family:Arial; font-weight:bold</code></pre>
+			</dd>
+			<dt>Text</dt>
+			<dd>
+				<p>This value represents a ticker text. This property is ignored if the property &quot;type&quot; is not &quot;text&quot;.</p>
+			</dd>
+			<dt>URL</dt>
+			<dd>
+				<p>This value represents the URL of the image file for a ticker text. Players must support   DataURLs for  images. This property is required if the property &quot;type&quot; is &quot;image&quot;, otherwise this property is not required. <a href="#refsRFC2397">[RFC2397]</a></p>
+			</dd>
+			<dt>Delay</dt>
+			<dd>
+				<p>This value represents the delay of the start to animate in seconds. For example, if this value is 3.0, then the animation of the ticker will start in 3 seconds.</p>
+			</dd>
+			<dt>Direction</dt>
+			<dd>
+				<p>This value represents the direction that the ticker text moves. This value is either &quot;right&quot; or &quot;left&quot; or &quot;none&quot;. When the value is &quot;none&quot;, the ticker represents a motionless ticker text.</p>
+				<p>In general, if the directionality of the ticker text is LTR (left-to-right) such as English, the direction is &quot;right&quot;. If the directionality of the ticker text is RTL (right-to-left) such as Arabic, the direction is &quot;left&quot;. </p>
+				<p>If the value is "none", the duration property must be specified and the speed property must be ignored.</p>
+			</dd>
+			<dt>Speed</dt>
+			<dd>
+				<p>This value represents the speed of the animation in pixels per second. For example, if this value is 10, then the ticker text will move to the specified direction at a speed of 10 pixels per second.</p>
+				<p>Unless the width of the ticker text is given in advance, applications must determine the width of the ticker text before the text is shown. Then application must calculate the length of move and the duration of the animation.</p>
+				<p>When the value of the direction property is &quot;none&quot;, the speed property is ignored.</p>
+			</dd>
+			<dt>Duration</dt>
+			<dd>
+				<p>This value represents the duration which the ticker text will be shown if the value of the direction property is &quot;none&quot;. This value must be specified in seconds.</p>
+				<p>When the value of the direction property is not &quot;none&quot;, the duration property is ignored.</p>
+			</dd>
+		</dl>
+		<p>Application must align a ticker text on the vertical middle in a ticker box.</p>
+		<p>The animation for a ticker is achieved using CSS transitions. The delay property can be mapped to the transition-duration property. The duration calculated by the application can be mapped to the transition-delay property specified in CSS transitions. The transition-timing-function property can be statically set to &quot;linear&quot; The transition-property property can be statically set to &quot;transform&quot;. When an application set the value of the transform property to &quot;translate(x, 0)&quot;, then the ticker box will start to move horizontally. <a href="#refsCSSTRANSITIONS">[CSSTRANSITIONS]</a> <a href="#refsCSSTRANSFORMS">[CSSTRANSFORMS]</a></p>
+		<p>Using CSS transitions for the animation is not mandatory. Applications may use technologies other than CSS transitions for the animation such as CSS Animations or DOM animations. <a href="#refsCSSANIMATIONS">[CSSANIMATIONS]</a></p>
+	</section>
+	<section>
+		<h3 id="multiple_texts">12.3 Multiple texts</h3>
+		<p>More than 2 ticker texts can be defined for a ticker box. Applications must play the ticker texts sequentially within the duration of the scene. Even if all tickers have not been played, the scene must be finished at the end of the duration of the scene.</p>
+		<p>If more than 2 ticker texts are defined for a ticker box, then application must play each ticker texts as follows:</p>
+		<ol>
+			<li>When the scene starts, start the first text.</li>
+			<li>When the first (or previous) text ends (i.e. when the text is completely invisible), start the next text if any.</li>
+			<li>When all the texts end, repeat these steps again if the repeat property of the ticker box is greater than 1. Otherwise, stop the ticker (i.e. no tickers are shown).</li>
+		</ol>
+	</section>
+</section>
+<section>
+	<h2 id="updating_the_control_data">13 Updating the control data</h2>
+	<p>Web-based signage contents are needed to update any time remotely. Applications must support a mechanism which updates the control data defined in this section. </p>
+	<p>Basically, updating the control data in this context is not intended to be used for emergency information such as disaster or accident information. Such update will be defined as the other profile in the future.</p>
+	<section>
+		<h3 id="updated_data">13.1 Updated data</h3>
+		<p>Applications must have the ability to update the targets as follows:</p>
+		<dl>
+			<dt>Whole control data</dt>
+			<dd>
+				<p>Applications must support updating the whole control data. Actually, this mode is same as initializing the application. </p>
+			</dd>
+			<dt>Scene data</dt>
+			<dd>
+				<p>Applications must support adding, deleting, and modifying a scene individually.</p>
+			</dd>
+		</dl>
+		<p>This profile does not define more sophisticated update target, such as updating individual properties for scenes, viewports, etc.</p>
+	</section>
+	<section>
+		<h3 id="catching_the_update_event">13.2 Catching the update event</h3>
+		<p>When applications determine whether the control data is updated or not, applications should not prevent the contents which is being played. Application should do it asynchronously or in background.</p>
+		<p>To check if the control data is updated, applications may use a polling mechanism such as the <cite>XMLHttpRequest</cite>. It is better to use the <cite>XMLHttpRequest</cite> in a dedicated worker thread specified in the <cite>Web Workers</cite> if possible. Or applications may use a server push mechanism such as the <cite>WebSocket API</cite> or the <cite>Server-Sent Events</cite>. <a href="#refsXHR">[XHR]</a> <a href="#refsWEBWORKERS">[WEBWORKERS]</a> <a href="#refsWEBSOCKET">[WEBSOCKET]</a> <a href="#refsSSE">[SSE]</a></p>
+		<p>If applications adopt a polling mechanism, the interval of time must be included in the control data.</p>
+	</section>
+	<section>
+		<h3 id="applying_the_updated_control_data">13.3 Applying the updated control data</h3>
+		<p>Applications must support the two ways to applying the update control data as follows:</p>
+		<dl>
+			<dt>Forced update</dt>
+			<dd>
+				<p>If the update target is the whole control data, or the update target is a scene and the targeted scene is now playing, then applications stop the current scene when applying the updated control data. Otherwise, applications don't interrupt the current scene.</p>
+				<p>Typically, this type of update is used to correct mistakes in the contents urgently.</p>
+			</dd>
+			<dt>Silent update</dt>
+			<dd>
+				<p>Applications do not interrupt the current scene when applying the updated control data. Applications apply it when the current scene finished. </p>
+			</dd>
+		</dl>
+		<p>If applications take a long time to initialize the updated data, applications may show some texts or icons indicating it is in processing.</p>
+	</section>
+</section>
+<section>
+	<h2 id="example_of_the_control_data">14. Example of the control data</h2>
+	<p><i>This section is non-normative.</i></p>
+	<p>The control data could be defined in a separated file from the files forming applications or contents. For example, it could be a JSON file, a XML file, etc. Applications fetch the file through the network when they are run. This sample shows one of possible control data file whose format is JSON.</p>
+	<pre><code>TBD</code></pre>
+</section>
+<section>
+	<h2 id="references">References</h2>
+	<p>All references are normative unless marked &quot;Non-normative&quot;.</p>
+	<dl>
+		<dt id="refsCSSANIMATIONS">[CSSANIMATIONS]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/css3-animations/">CSS Animations</a></cite>, Dean Jackson, David Hyatt, Chris Marrin, Sylvain Galineau, L. David Baron. W3C.</dd>
+		<dt id="refsCSSCOLOR">[CSSCOLOR]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/css3-color/">CSS Color Module Level 3</a></cite>, Steven Pemberton, Brad Pettit. W3C.</dd>
+		<dt id="refsCSSFONTS">[CSSFONTS]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/css3-fonts/">CSS Fonts Module Level 3</a></cite>, J. Daggett. W3C.</dd>
+		<dt id="refsCSSTRANSFORMS">[CSSTRANSFORMS]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/css3-transforms/">CSS Transforms</a></cite>, Simon Fraser, Dean Jackson, Edward O'Connor, Dirk Schulze, Aryeh Gregor, David Hyatt, Chris Marrin. W3C.</dd>
+		<dt id="refsCSSTRANSITIONS">[CSSTRANSITIONS]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/css3-transitions/">CSS Transitions</a></cite>, D. Jackson, D. Hyatt, C. Marrin, L. Baron. W3C.</dd>
+		<dt id="refsDOM4">[DOM4]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/dom/">DOM4</a></cite>, Anne van Kesteren, Aryeh Gregor, Lachlan Hunt, Ms2ger. W3C.</dd>
+		<dt id="refsGIF">[GIF]</dt>
+		<dd><cite><a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">Graphics Interchange Format</a></cite>. CompuServe.</dd>
+		<dt id="refsHTML5">[HTML5]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/html5/">HTML5</a></cite>, Robin Berjon, Travis Leithead, Erika Doyle Navara, Edward O'Connor, Silvia Pfeiffer, Ian Hickson. W3C.</dd>
+		<dt id="refsJPEG">[JPEG]</dt>
+		<dd><cite><a href="http://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a></cite>, E. Hamilton.</dd>
+		<dt id="refsJSON">[JSON]</dt>
+		<dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc4627">The application/json Media Type for JavaScript Object Notation (JSON)</a></cite>, D. Crockford. IETF.</dd>
+		<dt id="refsPDF">[PDF]</dt>
+		<dd>(Non-normative) <cite><a href="http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/pdfs/PDF32000_2008.pdf">Document management — Portable document format — Part 1: PDF</a></cite>. ISO.</dd>
+		<dt id="refsPNG">[PNG]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/PNG/">Portable Network Graphics (PNG) Specification</a></cite>, D. Duce. W3C.</dd>
+		<dt id="refsRFC2119">[RFC2119]</dt>
+		<dd><cite><a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a></cite>, S. Bradner. IETF.</dd>
+		<dt id="refsRFC2397">[RFC2397]</dt>
+		<dd><cite><a href="http://tools.ietf.org/html/rfc2397">The &quot;data&quot; URL scheme</a></cite>, L. Masinter. IETF.</dd>
+		<dt id="refsSSE">[SSE]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/eventsource/">Server-Sent Events</a></cite>, Ian Hickson. W3C.</dd>
+		<dt id="refsSVG">[SVG]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/SVGTiny12/">Scalable Vector Graphics (SVG) Tiny 1.2 Specification</a></cite>, O. Andersson, R. Berjon, E. Dahlström, A. Emmons, J. Ferraiolo, A. Grasso, V. Hardy, S. Hayman, D. Jackson, C. Lilley, C. McCormack, A. Neumann, C. Northway, A. Quint, N. Ramani, D. Schepers, A. Shellshear. W3C.</dd>
+		<dt id="refsWEBMESSAGING">[WEBMESSAGING]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/webmessaging/">HTML5 Web Messaging</a></cite>, Ian Hickson. W3C.</dd>
+		<dt id="refsWEBSOCKET">[WEBSOCKET]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/websockets/">WebSocket API</a></cite>, Ian Hickson. W3C.</dd>
+		<dt id="refsWEBWORKERS">[WEBWORKERS]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/workers/">Web Workers</a></cite>, Ian Hickson. W3C.</dd>
+		<dt id="refsXHR">[XHR]</dt>
+		<dd><cite><a href="http://www.w3.org/TR/XMLHttpRequest/">XMLHttpRequest</a></cite>, Julian Aubourg, Jungkee Song, Hallvord R. M. Steen, Anne van Kesteren. W3C.</dd>
+		<dt id="refsXML">[XML]</dt>
+		<dd>(Non-normative) <cite><a href="http://www.w3.org/TR/xml/">Extensible Markup Language</a></cite>, T. Bray, J. Paoli, C. Sperberg-McQueen, E. Maler, F. Yergeau. W3C.</dd>
+	</dl>
+</section>
+</body>
+</html>
