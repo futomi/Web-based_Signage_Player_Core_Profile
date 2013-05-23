@@ -35,7 +35,7 @@ dl {
 	<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
 	<h1>Profiles for Web-based Signage Player - Core Profile</h1>
 	<p id="sub-title">Editor's Draft
-		<time datetime="2013-05-20">20 May 2013</time>
+		<time datetime="2013-05-23">23 May 2013</time>
 	</p>
 	<dl>
 		<dt>This Version:</dt>
@@ -143,8 +143,8 @@ dl {
 </section>
 <section>
 	<h2 id="concept_of_viewport">4. Concept of viewport</h2>
-	<p>The <dfn id="display_viewport">display viewport</dfn> is the area in which the display can show something. The <dfn id="content_viewport">content viewport</dfn> is the area in which an application shows web-based signage contents. The display viewport and the content viewport are not necessarily identical.</p>
-	<p>In the content viewport, the <dfn id="region">region</dfn>s are positioned. The web-based signage has at least one region in the content viewport. It may have also multiple regions. If it has multiple regions, each region is basically used to play independent contents of each other.</p>
+	<p>The <dfn id="display_viewport">display viewport</dfn> is the area in which the display can show something. The <dfn id="application_viewport">application viewport</dfn> is the area in which an application shows web-based signage contents. The display viewport and the application viewport are not necessarily identical.</p>
+	<p>In the application viewport, the <dfn id="region">region</dfn>s are positioned. The web-based signage has at least one region in the application viewport. It may have also multiple regions. If it has multiple regions, each region is basically used to play independent contents of each other.</p>
 	<p>In a region, one scene is shown. A region does not show multiple scenes simultaneously. A region show some scenes sequentially based on the playlist.</p>
 	<p>A scene shows contents. In this profile, the contents consist of an image file or a HTML page (a HTML file, CSS files, JavaScript files, image files, SVG files, etc.)</p>
 	<figure> <img src="imgs/concept_of_viewport.png" width="400" height="229" alt="">
@@ -153,92 +153,92 @@ dl {
 </section>
 <section>
 	<h2 id="viewport_properties">5 Viewport properties</h2>
-	<p>The content viewport is the rectangle area in which web-based signage contents are shown. On the other hand, the display viewport is the rectangle area of the display. Therefore, the content viewport and the display viewport are not necessarily identical. The width and height may be different. The aspect ratio also may be different.</p>
+	<p>The application viewport is the rectangle area in which web-based signage contents are shown. On the other hand, the display viewport is the rectangle area of the display. Therefore, the application viewport and the display viewport are not necessarily identical. The width and height may be different. The aspect ratio also may be different.</p>
 	<p>The control data includes the information of the display viewport as follows:</p>
 	<dl>
 		<dt>Background color</dt>
 		<dd>
-			<p>This color will be seen when the aspect ratios or the dimensions of the content viewport and the display viewport are not identical. (typically, it will be black)</p>
+			<p>This color will be seen when the aspect ratios or the dimensions of the application viewport and the display viewport are not identical. (typically, it will be black)</p>
 			<p>This color is specified in a CSS color. <a href="#refsCSSCOLOR">[CSSCOLOR]</a></p>
 		</dd>
 	</dl>
-	<p>The control data includes the information of the content viewport as follows:</p>
+	<p>The control data includes the information of the application viewport as follows:</p>
 	<dl>
 		<dt>Background color</dt>
 		<dd>
-			<p>This color will be seen when the regions does not cover the whole content viewport. (typically, it will be black)</p>
+			<p>This color will be seen when the regions does not cover the whole application viewport. (typically, it will be black)</p>
 			<p>This color is specified in a CSS color. <a href="#refsCSSCOLOR">[CSSCOLOR]</a></p>
 		</dd>
 		<dt>Width</dt>
 		<dd>
-			<p>This is the intrinsic width of the content viewport in pixel.</p>
+			<p>This is the intrinsic width of the application viewport in pixel.</p>
 		</dd>
 		<dt>Height</dt>
 		<dd>
-			<p>This is the intrinsic height of the content viewport in pixel.</p>
+			<p>This is the intrinsic height of the application viewport in pixel.</p>
 		</dd>
 		<dt>Fit</dt>
 		<dd>
-			<p>This is a mode which indicates how the content viewport should be fit to the display viewport. There are 3 modes as follows:</p>
+			<p>This is a mode which indicates how the application viewport should be fit to the display viewport. There are 3 modes as follows:</p>
 			<dl>
 				<dt>None</dt>
 				<dd>
-					<p>Applications must not scale the content viewport. The content viewport will be shown as it is on the display viewport. If the size of the content viewport is smaller than the size of the display viewport, the margins will appear. The margin will be colored in the background color specified for  the display viewport (typically, it will be black).</p>
+					<p>Applications must not scale the application viewport. The application viewport will be shown as it is on the display viewport. If the size of the application viewport is smaller than the size of the display viewport, the margins will appear. The margin will be colored in the background color specified for  the display viewport (typically, it will be black).</p>
 				<dt>Meet</dt>
 				<dd>
-					<p>Applications must scale the content viewport preserving the aspect ratio of the content viewport so that either the width or the height of the content viewport is equal to that of the display viewport, and the whole content viewport is visible. If the aspect ratio of the content viewport does not match the aspect ratio of the display viewport, the content viewport will be letterboxed or pillarboxed (i.e. margins will appear on both of the top and bottom sides or both of the left and right sides). The margin will be colored in the background color  specified for the display viewport (typically, it will be black).</p>
+					<p>Applications must scale the application viewport preserving the aspect ratio of the application viewport so that either the width or the height of the application viewport is equal to that of the display viewport, and the whole application viewport is visible. If the aspect ratio of the application viewport does not match the aspect ratio of the display viewport, the application viewport will be letterboxed or pillarboxed (i.e. margins will appear on both of the top and bottom sides or both of the left and right sides). The margin will be colored in the background color  specified for the display viewport (typically, it will be black).</p>
 				<dt>Fill</dt>
 				<dd>
-					<p>Applications must scale the content viewport preserving the aspect ratio of the content viewport so that either the width or the height of the content viewport is equal to that of the display viewport, and the whole display viewport is covered by the content viewport. If the aspect ratio of the content viewport does not match the aspect ratio of the display viewport, a part of the content viewport is invisible.</p>
+					<p>Applications must scale the application viewport preserving the aspect ratio of the application viewport so that either the width or the height of the application viewport is equal to that of the display viewport, and the whole display viewport is covered by the application viewport. If the aspect ratio of the application viewport does not match the aspect ratio of the display viewport, a part of the application viewport is invisible.</p>
 				</dd>
 			</dl>
 		</dd>
 		<dt>Horizontal align</dt>
 		<dd>
-			<p>This property defines how the content viewport should be aligned horizontally in the display viewport. There are 3 types for the horizontal align as follows:</p>
+			<p>This property defines how the application viewport should be aligned horizontally in the display viewport. There are 3 types for the horizontal align as follows:</p>
 			<dl>
 				<dt>Left</dt>
 				<dd>
-					<p>The content viewport is left-justified in the display viewport so that the left side of the content viewport fit the left side of the display viewport.</p>
+					<p>The application viewport is left-justified in the display viewport so that the left side of the application viewport fit the left side of the display viewport.</p>
 				</dd>
 				<dt>Center</dt>
 				<dd>
-					<p>The content viewport is center-justified in the display so that the horizontal center of the content viewport fit the horizontal center of the display viewport.</p>
+					<p>The application viewport is center-justified in the display so that the horizontal center of the application viewport fit the horizontal center of the display viewport.</p>
 				</dd>
 				<dt>Right</dt>
 				<dd>
-					<p>The content viewport is right-justified so that the right side of the content viewport fit the right side of the display viewport.</p>
+					<p>The application viewport is right-justified so that the right side of the application viewport fit the right side of the display viewport.</p>
 				</dd>
 			</dl>
 		</dd>
 		<dt>Vertical align</dt>
 		<dd>
-			<p>This property defines how the content viewport should be aligned vertically in the display viewport. There are 3 types for the vertical align as follows:</p>
+			<p>This property defines how the application viewport should be aligned vertically in the display viewport. There are 3 types for the vertical align as follows:</p>
 			<dl>
 				<dt>Top</dt>
 				<dd>
-					<p>The content viewport is top-justified so that the top side of the content viewport fit the top side of the display viewport.</p>
+					<p>The application viewport is top-justified so that the top side of the application viewport fit the top side of the display viewport.</p>
 				</dd>
 				<dt>Middle</dt>
 				<dd>
-					<p>The content viewport is middle-justified so that the vertical center of the content viewport fit the vertical center of the display viewport.</p>
+					<p>The application viewport is middle-justified so that the vertical center of the application viewport fit the vertical center of the display viewport.</p>
 				</dd>
 				<dt>Bottom</dt>
 				<dd>
-					<p>The content viewport is bottom-justified so that the bottom side of the content viewport fit the bottom side of the display viewport.</p>
+					<p>The application viewport is bottom-justified so that the bottom side of the application viewport fit the bottom side of the display viewport.</p>
 				</dd>
 			</dl>
 		</dd>
 	</dl>
-	<p>The following figures show the combinations of the fit, horizontal align and vertical align properties. In the figures, the content viewport is vertically long, while display viewport is horizontally long.</p>
+	<p>The following figures show the combinations of the fit, horizontal align and vertical align properties. In the figures, the application viewport is vertically long, while display viewport is horizontally long.</p>
 	<figure> <img src="imgs/content_viewport.png" width="785" height="360" alt="">
-		<figcaption>Figure: Properties for content viewport</figcaption>
+		<figcaption>Figure: Properties for application viewport</figcaption>
 	</figure>
 	<p>Applications can use <code>scale()</code> or <code>scale3d()</code> specified CSS Transforms to implement the fit property. [CSSTRANSFORMS]</p>
 </section>
 <section>
 	<h2 id="regions">6 Regions</h2>
-	<p>Web-based Signage player must support multi-region. All web-based signage have at least one region. Multi-region means that the content viewport area is separated into more than 2 regions. Besides, the scene shown in each region is played independently of each other. Each region has a playlist data independently.</p>
+	<p>Web-based Signage player must support multi-region. All web-based signage have at least one region. Multi-region means that the application viewport area is separated into more than 2 regions. Besides, the scene shown in each region is played independently of each other. Each region has a playlist data independently.</p>
 	<p>The following examples  show 2-region layouts:</p>
 	<figure> <img src="imgs/multi_region_examples.png" width="600" height="155" alt="">
 		<figcaption>Figure: Examples of multi-regions</figcaption>
@@ -248,11 +248,11 @@ dl {
 	<dl>
 		<dt>Top</dt>
 		<dd>
-			<p>The value of this property is the distance from the top edge of the content viewport to the top edge of the region.</p>
+			<p>The value of this property is the distance from the top edge of the application viewport to the top edge of the region.</p>
 		</dd>
 		<dt>Left</dt>
 		<dd>
-			<p>The value of this property is the distance from the left edge of the content viewport to the left edge of the region.</p>
+			<p>The value of this property is the distance from the left edge of the application viewport to the left edge of the region.</p>
 		</dd>
 		<dt>Width</dt>
 		<dd>
@@ -275,7 +275,7 @@ dl {
 	<figure> <img src="imgs/multi_region_properties.png" width="312" height="246" alt="">
 		<figcaption>Figure: The relationships between the properties</figcaption>
 	</figure>
-	<p>The values of the top, left, width, and height are specified in pixel or percent. When values are specified in percent, it is based on the width or height of the content viewport. For example, when the width of the content viewport is 1280px and the value of the width property is 20%, then the width of the region is 256px. When the height of content viewport is 720px and the value of the height property is 20%, then the height of the region is 144px. Similarly, when the value of the left property is 20%, the distance from the left edge of the content viewport to the left edge of the region is 256px.</p>
+	<p>The values of the top, left, width, and height are specified in pixel or percent. When values are specified in percent, it is based on the width or height of the application viewport. For example, when the width of the application viewport is 1280px and the value of the width property is 20%, then the width of the region is 256px. When the height of application viewport is 720px and the value of the height property is 20%, then the height of the region is 144px. Similarly, when the value of the left property is 20%, the distance from the left edge of the application viewport to the left edge of the region is 256px.</p>
 </section>
 <section>
 	<h2 id="scene_content_types">7 Scene content types</h2>
@@ -285,7 +285,7 @@ dl {
 		<dd>
 			<p>Players must render an image file as a scene. Players must support PNG, GIF (including animation gif), and JPEG as an image format at least. An image file is rendered using the <code>img</code> element or the <code>object</code> element specified in HTML5. <a href="#refsPNG">[PNG]</a> <a href="#refsGIF">[GIF]</a> <a href="#refsJPEG">[JPEG]</a> <a href="#refsHTML5">[HTML5]</a></p>
 			<p>Players must support   DataURLs for  images. <a href="#refsRFC2397">[RFC2397]</a></p>
-			<p>Players may support more sophisticated formats, such as PDF. <a href="#refsPDF">[PDF]</a></p>
+			<!-- <p>Players may support more sophisticated formats, such as PDF. <a href="#refsPDF">[PDF]</a></p> -->
 		</dd>
 		<dt>HTML-based page</dt>
 		<dd>
@@ -728,8 +728,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dd><cite><a href="http://www.w3.org/Graphics/JPEG/jfif3.pdf">JPEG File Interchange Format</a></cite>, E. Hamilton.</dd>
 		<dt id="refsJSON">[JSON]</dt>
 		<dd>(Non-normative) <cite><a href="http://tools.ietf.org/html/rfc4627">The application/json Media Type for JavaScript Object Notation (JSON)</a></cite>, D. Crockford. IETF.</dd>
+		<!--
 		<dt id="refsPDF">[PDF]</dt>
 		<dd>(Non-normative) <cite><a href="http://www.adobe.com/content/dam/Adobe/en/devnet/acrobat/pdfs/PDF32000_2008.pdf">Document management — Portable document format — Part 1: PDF</a></cite>. ISO.</dd>
+		-->
 		<dt id="refsPNG">[PNG]</dt>
 		<dd><cite><a href="http://www.w3.org/TR/PNG/">Portable Network Graphics (PNG) Specification</a></cite>, D. Duce. W3C.</dd>
 		<dt id="refsRFC2119">[RFC2119]</dt>
