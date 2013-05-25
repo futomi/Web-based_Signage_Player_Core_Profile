@@ -35,7 +35,7 @@ dl {
 	<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
 	<h1>Profiles for Web-based Signage Player - Core Profile</h1>
 	<p id="sub-title">Editor's Draft
-		<time datetime="2013-05-23">23 May 2013</time>
+		<time datetime="2013-05-25">25 May 2013</time>
 	</p>
 	<dl>
 		<dt>This Version:</dt>
@@ -128,7 +128,7 @@ dl {
 <section>
 	<h2 id="terminology">2. Terminology</h2>
 	<p>The term <dfn id="web-based_signage">web-based signage</dfn> means digital signage whose contents are created by only web-technologies. Besides, it has a capability of connecting to a network. It is not a matter whether the network is the Internet or not. The web-based signage includes the terminal in an intranet.</p>
-	<p>The term <dfn id="contents">contents</dfn> mean everything shown on a digital signage display. The contents of the web-based signage are served by a content server through a network. They consist of HTML, CSS, and JavaScript. Some contents are possibly created using XML-based technologies which are embedded in HTML, such as SVG.</p>
+	<p>The term <dfn id="contents">contents</dfn> mean everything shown on a digital signage display. The contents of the web-based signage are served by a content server through a network. They consist of HTML, CSS, and JavaScript. Some contents are possibly created using XML-based technologies which are embedded in HTML, such as SVG. <a href="#refsSVG">[SVG]</a></p>
 	<p>The term <dfn id="scene">scene</dfn> means a part of web-based signage contents. In this document, It is limitted to a still image, a  html document without videos and audios. A scene possibly has some animation. Generally, web-based signage plays a sequence of scenes, and shows each scene one by one continuously and repeatedly.</p>
 	<p>The term <dfn id="runtime">runtime</dfn> means a common web browser (webkit-based browsers, Firefox, IE, etc.) or a web-based application runtime (Firefox OS, Tizen, Windows 8, etc.) installed in tablets, PCs, STBs, TV (most of current high-end TV products implement a web-browser), etc.</p>
 	<p>The term <dfn id="application">application</dfn> means a set of JavaScript programs and style sheets and HTML. An application is run on a runtime, fetches contents form a content server, then plays the contents appropriately.</p>
@@ -293,10 +293,12 @@ dl {
 			<p>For a security reason, players are encouraged to render a HTML-based scene in the <code>iframe</code> element specified in the HTML5. Each HTML-based scene possibly has scripts for some kind of actions or animations. If some scenes are made by third parties, the other scenes are possibly exposed to some kind of risks. Besides, the styling possibly affects the other scenes. Therefore, players should have a mechanism that contents in scenes never affect the underlying application and the other scenes.</p>
 			<p>Applications must provide a mechanism to notify each scene of events which represents the moment when the scene was shown and the moment when the scene was hidden, so that each scene can start and stop various behaviors or animations with proper timing. The mechanism is introduced in the section "The iframe event notification mechanism" below.</p>
 		</dd>
+		<!--
 		<dt>SVG-based page</dt>
 		<dd>
 			<p>Players must render an SVG-based page as a scene. SVG contents may be rendered in the <code>svg</code> element embedded in HTML (a.k.a. inline SVG) or in the <code>object</code> element as specified in the HTML5 specification. <a href="#refsHTML5">[HTML5]</a> <a href="#refsSVG">[SVG]</a></p>
 		</dd>
+		-->
 	</dl>
 	<section>
 		<h3 id="the_event_notification_mechanism">7.1 The event notification mechanism</h3>
@@ -741,7 +743,7 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt id="refsSSE">[SSE]</dt>
 		<dd><cite><a href="http://www.w3.org/TR/eventsource/">Server-Sent Events</a></cite>, Ian Hickson. W3C.</dd>
 		<dt id="refsSVG">[SVG]</dt>
-		<dd><cite><a href="http://www.w3.org/TR/SVGTiny12/">Scalable Vector Graphics (SVG) Tiny 1.2 Specification</a></cite>, O. Andersson, R. Berjon, E. Dahlström, A. Emmons, J. Ferraiolo, A. Grasso, V. Hardy, S. Hayman, D. Jackson, C. Lilley, C. McCormack, A. Neumann, C. Northway, A. Quint, N. Ramani, D. Schepers, A. Shellshear. W3C.</dd>
+		<dd>(Non-normative) <cite><a href="http://www.w3.org/TR/SVGTiny12/">Scalable Vector Graphics (SVG) Tiny 1.2 Specification</a></cite>, O. Andersson, R. Berjon, E. Dahlström, A. Emmons, J. Ferraiolo, A. Grasso, V. Hardy, S. Hayman, D. Jackson, C. Lilley, C. McCormack, A. Neumann, C. Northway, A. Quint, N. Ramani, D. Schepers, A. Shellshear. W3C.</dd>
 		<dt id="refsWEBMESSAGING">[WEBMESSAGING]</dt>
 		<dd><cite><a href="http://www.w3.org/TR/webmessaging/">HTML5 Web Messaging</a></cite>, Ian Hickson. W3C.</dd>
 		<dt id="refsWEBSOCKET">[WEBSOCKET]</dt>
