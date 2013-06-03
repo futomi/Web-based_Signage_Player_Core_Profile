@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Profiles for Web-based Signage Player - Core Profile</title>
+<title>Architecture and Requirements for Web-based Signage Player - Core Profile</title>
 <script>
 (function () {
   var els = ['section', 'article', 'aside', 'nav', 'header', 'footer', 'time'];
@@ -33,9 +33,9 @@ dl {
 <body>
 <header class="head" id="head">
 	<p><a href="http://www.w3.org/"><img alt="W3C" height="48" src="http://www.w3.org/Icons/w3c_home" width="72"></a></p>
-	<h1>Profiles for Web-based Signage Player - Core Profile</h1>
+	<h1>Architecture and Requirements for Web-based Signage Player - Core Profile</h1>
 	<p id="sub-title">Editor's Draft
-		<time datetime="2013-05-25">25 May 2013</time>
+		<time datetime="2013-06-03">3 Jun 2013</time>
 	</p>
 	<dl>
 		<dt>This Version:</dt>
@@ -71,8 +71,8 @@ dl {
 <nav>
 	<h2 id="toc">Table of Contents</h2>
 	<ol class="toc">
-		<li><a href="#introduction">1 Introduction of the Profiles for Web-based Signage Player</a></li>
-		<li><a href="#terminology">2 Terminology</a></li>
+		<li><a href="#introduction">1 Introduction</a></li>
+		<li><a href="#terminology">2 Scope and terminology</a></li>
 		<li><a href="#concept_of_control_data">3 Concept of control data</a></li>
 		<li><a href="#concept_of_viewport">4 Concept of viewport</a></li>
 		<li><a href="#viewport_properties">5 Viewport properties</a></li>
@@ -111,10 +111,10 @@ dl {
 	</ol>
 </nav>
 <section>
-	<h2 id="introduction">1 Introduction of the Profiles for Web-based Signage Player</h2>
+	<h2 id="introduction">1 Introduction</h2>
 	<p><i>This section is non-normative.</i></p>
-	<p>The &quot;Profiles for Web-based Signage Player&quot; defines precise requirements for web-based signage players.</p>
-	<p>The profiles for web-based signage player consist of a number of profiles. Basically, web-based signage is based on the core profile (this document). As necessary, web-based signage systems adopt the other profiles additionally.</p>
+	<p>The &quot;<b>Architecture and Requirements for Web-based Signage Player</b>&quot; defines precise requirements for web-based signage players.</p>
+	<p>The Architecture and Requirements for Web-based Signage Player consist of a number of profiles. Basically, web-based signage is based on the core profile (this document). As necessary, web-based signage systems adopt the other profiles additionally.</p>
 	<p>These profiles are also intended to be used as product specification sheets of web-based signage products for vendors, RFP (request for proposal) used by the signage operators to request SDCs (Systems Development Corporations) to develop a web-based signage system , etc.</p>
 	<p>Each profile will be published officially as a W3C Business Group Report when all requirements are proven to be able to be implemented and run on at least one existing user agents technically (exept the requirements marked as &quot;Optional&quot;). In other words, at least one demonstration implementing all the requirements must exist to publish the profile officially.</p>
 	<p>Through these activities, the Web-based Signage Business Group aims to:</p>
@@ -126,23 +126,24 @@ dl {
 	<p>We believe that web-based signage contribute to cost-efficiencies and rich functionalities in the digital signage industry. As a result, we hope that the digital signage industry will grow up increasingly.</p>
 </section>
 <section>
-	<h2 id="terminology">2. Terminology</h2>
-	<p>The term <dfn id="web-based_signage">web-based signage</dfn> means digital signage whose contents are created by only web-technologies. Besides, it has a capability of connecting to a network. It is not a matter whether the network is the Internet or not. The web-based signage includes the terminal in an intranet.</p>
-	<p>The term <dfn id="contents">contents</dfn> mean everything shown on a digital signage display. The contents of the web-based signage are served by a content server through a network. They consist of HTML, CSS, and JavaScript. Some contents are possibly created using XML-based technologies which are embedded in HTML, such as SVG. <a href="#refsSVG">[SVG]</a></p>
-	<p>The term <dfn id="scene">scene</dfn> means a part of web-based signage contents. In this document, It is limitted to a still image, a  html document without videos and audios. A scene possibly has some animation. Generally, web-based signage plays a sequence of scenes, and shows each scene one by one continuously and repeatedly.</p>
-	<p>The term <dfn id="runtime">runtime</dfn> means a common web browser (webkit-based browsers, Firefox, IE, etc.) or a web-based application runtime (Firefox OS, Tizen, Windows 8, etc.) installed in tablets, PCs, STBs, TV (most of current high-end TV products implement a web-browser), etc.</p>
-	<p>The term <dfn id="application">application</dfn> means a set of JavaScript programs and style sheets and HTML. An application is run on a runtime, fetches contents form a content server, then plays the contents appropriately.</p>
-	<p>The term <dfn id="player">player</dfn> means a set of a  runtime and an application. It doesn't include the underlying hardware and the operating system. </p>
-	<p>This document mainly defines the requirements for applications. But it implicitly includes the requirements for runtimes because applications must use  web technologies implemented in runtimes to meet the requirements for applications. Therefore, this document defines the requirements for players (applications and runtimes).</p>
+	<h2 id="terminology">2 Scope and terminology</h2>
+	<p><dfn id="web-based_signage">Web-based signage</dfn> is digital signage whose contents are created using web-technologies. Besides, it has a capability of connecting to a network. It is not a matter whether the network is the Internet or not. The web-based signage includes the terminal in an intranet.</p>
+	<p>A <dfn id="player">player</dfn> plays <a href="#contents">contents</a> for <a href="#web-based_signage">web-based signage</a>. It is a set of an <a href="#application">application</a> and a <a href="#runtime">runtime</a>. This document is not aimed for limitation of underlying hardware and the operating system. Basically, <a href="#web-based_signage">web-based signage</a> is based on the core profile (this document). As necessary, web-based signage systems adopt the other profiles additionally.</p>
+	<p>An <dfn id="application">application</dfn> is comprised of the software such as frameworks or the libraries for signage. An <a href="#application">application</a> is a set of JavaScript programs and style sheets and HTML. An <a href="#application">application</a> is run on a <a href="#runtime">runtime</a>, fetches contents form a content server, then plays the <a href="#contents">contents</a> appropriately. The architecture and the functions of the applications will be prescribed as the features for <a href="#web-based_signage">web-based signage</a>.</p>
+	<p>A <a href="#player">player</a> uses the functions and the expressions which the underlying <a href="#runtime">runtime</a> provides. Basically, they are specified in HTML5 in wide sense. This document does not restrict the use of the functions which are out of scope of this document. <a href="#application">Application</a>s may use such functions and expressions.</p>
+	<p>A <dfn id="runtime">runtime</dfn> is a common web browser (e.g. webkit-based browsers, Firefox, IE, etc.) or a web-based application runtime (e.g. Firefox OS, Tizen, Windows 8, etc.) installed in tablets, PCs, STBs, TV (most of current high-end TV products implement a web-browser), etc. On the other hand, it is not a dedicated subset or subset-based derivation of HTML5 in wide sense. Basically, <a href="#runtime">runtime</a> offers functions called HTML5 in the wide sense. Basically, the specifications of HTML5 in wide sense are be specified particularly by W3C.</p>
+	<p>This document mainly defines the requirements for <a href="#application">application</a>s. But it implicitly includes the requirements for <a href="#runtime">runtime</a>s because <a href="#application">application</a>s must use web technologies implemented in <a href="#runtime">runtime</a>s to meet the requirements for <a href="#application">application</a>s. Therefore, this document defines the requirements for players (<a href="#application">application</a>s and <a href="#runtime">runtime</a>s).</p>
+	<p><dfn id="contents">Contents</dfn> mean everything shown on a digital signage display. The contents of web-based signage are served by a content server through a network. They consist of HTML, CSS, and JavaScript. Some contents are possibly created using XML-based technologies which are embedded in HTML, such as SVG. <a href="#refsSVG">[SVG]</a></p>
+	<p>A <dfn id="scene">scene</dfn> means a part of web-based signage <a href="#contents">contents</a>. In this document, It is limitted to a still image, a  html document without videos and audios. A scene possibly has some animation. Generally, <a href="#web-based_signage">web-based signage</a> plays a sequence of <a href="#scene">scene</a>s, and shows each <a href="#scene">scene</a> one by one continuously and repeatedly.</p>
 </section>
 <section>
-	<h2 id="concept_of_control_data">3. Concept of control data</h2>
+	<h2 id="concept_of_control_data">3 Concept of control data</h2>
 	<p>The <dfn id="control_data">control data</dfn> is a set of information which describes what, when, how the contents should be shown and played. Concretely speaking, it consists of information about scene content types, playlist, scheduling, multi-region, ticker, etc. Basically, this document defines the requirements for players in the form of describing the control data. Applications must support a mechanism which handles the control data.</p>
 	<p>In this document, the format of the control data is not defined. It may be JSON or XML or custom formats. <a href="#refsJSON">[JSON]</a> <a href="#refsXML">[XML]</a></p>
 	<p>Control data is insisted to be generated by CMS (content management system) for web-based signage. Conformant players of this profile must show and  play contents as a scene as the control data defines.</p>
 </section>
 <section>
-	<h2 id="concept_of_viewport">4. Concept of viewport</h2>
+	<h2 id="concept_of_viewport">4 Concept of viewport</h2>
 	<p>The <dfn id="display_viewport">display viewport</dfn> is the area in which the display can show something. The <dfn id="application_viewport">application viewport</dfn> is the area in which an application shows web-based signage contents. The display viewport and the application viewport are not necessarily identical.</p>
 	<p>In the application viewport, the <dfn id="region">region</dfn>s are positioned. The web-based signage has at least one region in the application viewport. It may have also multiple regions. If it has multiple regions, each region is basically used to play independent contents of each other.</p>
 	<p>In a region, one scene is shown. A region does not show multiple scenes simultaneously. A region show some scenes sequentially based on the playlist.</p>
