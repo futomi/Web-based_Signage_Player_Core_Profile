@@ -11,8 +11,11 @@
   }
 })();
 </script>
-<link href="http://www.w3.org/community/src/css/spec/bg-draft.css" rel="stylesheet">
+<link href="https://www.w3.org/community/src/css/spec/bg-draft.css" rel="stylesheet">
 <style>
+body {
+	font-family: Verdana, YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
 #sub-title {
 	font-size: 150%;
 	font-weight: bold;
@@ -286,7 +289,7 @@ dl {
 		<dd>
 			<p>Players must render an image file as a scene. Players must support PNG, GIF (including animation gif), and JPEG as an image format at least. An image file is rendered using the <code>img</code> element or the <code>object</code> element specified in HTML5. <a href="#refsPNG">[PNG]</a> <a href="#refsGIF">[GIF]</a> <a href="#refsJPEG">[JPEG]</a> <a href="#refsHTML5">[HTML5]</a></p>
 			<p>Players must support   DataURLs for  images. <a href="#refsRFC2397">[RFC2397]</a></p>
-			<!-- <p>Players may support more sophisticated formats, such as PDF. <a href="#refsPDF">[PDF]</a></p> -->
+			<!-- <p>Players may support more sophisticated formats, such as PDF. <a href="#refsPDF">[PDF]</a></p> --> 
 		</dd>
 		<dt>HTML-based page</dt>
 		<dd>
@@ -423,12 +426,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Fade</dt>
 		<dd>
 			<p>When a scene starts, the opacity of the scene is 0.0 at first. The scene is invisible at the moment. Then it increases gradually. Finally, the opacity becomes 1.0 and the scene is visible completely.</p>
-			<figure>
-				<img src="imgs/trans_fade_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_fade_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the fade effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_fade.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_fade.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the fade effect</figcaption>
 			</figure>
 			<p>When a scene ends, the opacity of the scene is 1.0 at first. The scene is fully visible at the moment. Then it decreases gradually. Finally, the opacity becomes 0.0 and the scene is invisible.</p>
@@ -436,12 +437,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Slide to right</dt>
 		<dd>
 			<p>When a scene starts, the scene is positioned so that the right edge of the scene fits the left edge of the region at first. It is invisible at the moment. Then it moves to right gradually. Finally, the right edge of the scene fits the right edge of the region.</p>
-			<figure>
-				<img src="imgs/trans_slide_right_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_slide_right_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the slide-to-right effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_slide_right.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_slide_right.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the slide-to-right effect</figcaption>
 			</figure>
 			<p>When a scene ends, the scene is positioned so that the left edge of the scene fits the left edge of the region at first. It is visible at the moment. Then it moves to right gradually. Finally, the left edge of the scene fits the right edge of the region.</p>
@@ -449,12 +448,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Slide to left</dt>
 		<dd>
 			<p>When a scene starts, the scene is positioned so that the left edge of the scene fits the right edge of the region at first. It is invisible at the moment. Then it moves to left gradually. Finally, the left edge of the scene fits the left edge of the region.</p>
-			<figure>
-				<img src="imgs/trans_slide_left_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_slide_left_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the slide-to-left effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_slide_left.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_slide_left.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the slide-to-left effect</figcaption>
 			</figure>
 			<p>When a scene ends, the scene is positioned so that the right edge of the scene fits the right edge of the region at first. It is visible at the moment. Then it moves to left gradually. Finally, the right edge of the scene fits the left edge of the region.</p>
@@ -462,12 +459,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Slide to top</dt>
 		<dd>
 			<p>When a scene starts, the scene is positioned so that the top edge of the scene fits the bottom edge of the region at first. It is invisible at the moment. Then it moves to top gradually. Finally, the top edge of the scene fits the top edge of the region.</p>
-			<figure>
-				<img src="imgs/trans_slide_top_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_slide_top_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the slide-to-top effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_slide_top.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_slide_top.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the slide-to-top effect</figcaption>
 			</figure>
 			<p>When a scene ends, the scene is positioned so that the bottom edge of the scene fits the bottom edge of the region at first. It is visible at the moment. Then it moves to top gradually. Finally, the bottom edge of the scene fits the top edge of the region.</p>
@@ -475,12 +470,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Slide to bottom</dt>
 		<dd>
 			<p>When a scene starts, the scene is positioned so that the bottom edge of the scene fits the top edge of the viewport at first. It is invisible at the moment. Then it moves to bottom gradually. Finally, the bottom edge of the scene fits the bottom edge of the region.</p>
-			<figure>
-				<img src="imgs/trans_slide_bottom_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_slide_bottom_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the slide-to-bottom effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_slide_bottom.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_slide_bottom.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the slide-to-bottom effect</figcaption>
 			</figure>
 			<p>When a scene ends, the scene is positioned so that the top edge of the scene fits the top edge of the viewport at first. It is visible at the moment. Then it moves to bottom gradually. Finally, the top edge of the scene fits the bottom edge of the region.</p>
@@ -488,12 +481,10 @@ iframe.contentWindow.dispatchEvent(event);</code></pre>
 		<dt>Scale</dt>
 		<dd>
 			<p>When a scene starts, the scene is scaled down as small as possible, positioned at the center of the viewport. Then it is scaled up gradually. Finally, its size becomes as same as the size of the region.</p>
-			<figure>
-				<img src="imgs/trans_scale_timeline.png" width="800" height="117" alt="">
+			<figure> <img src="imgs/trans_scale_timeline.png" width="800" height="117" alt="">
 				<figcaption>Figure: The timeline of the scale effect</figcaption>
 			</figure>
-			<figure>
-				<img src="imgs/trans_scale.gif" width="200" height="150" alt="">
+			<figure> <img src="imgs/trans_scale.gif" width="200" height="150" alt="">
 				<figcaption>Figure: The animation of the scale effect</figcaption>
 			</figure>
 			<p>When a scene ends, it is scaled down gradually. Finally, its size becomes as small as posibble, positioned at the center of the viewport.</p>
